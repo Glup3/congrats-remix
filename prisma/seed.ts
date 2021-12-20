@@ -26,6 +26,7 @@ async function main() {
                 recipient: 'Alex',
                 username: 'admin',
                 type: 'Christmas',
+                date: '2022-01-09T23:00:00.000Z',
             },
         ],
     })

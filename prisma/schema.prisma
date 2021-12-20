@@ -30,6 +30,7 @@ model Message {
   description String
   recipient   String
   type        EventType
+  date        DateTime
   username    String
   user        User      @relation(fields: [username], references: [username])
 }
