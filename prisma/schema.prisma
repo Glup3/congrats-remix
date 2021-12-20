@@ -1,0 +1,41 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../app/generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  username String    @id
+  password String
+  role     Role      @default(User)
+  messages Message[]
+}
+
+enum Role {
+  Admin
+  User
+}
+
+model Message {
+  id          String    @id
+  title       String
+  /// saved as HTML
+  description String
+  recipient   String
+  type        EventType
+  username    String
+  user        User      @relation(fields: [username], references: [username])
+}
+
+enum EventType {
+  Christmas
+  Birthday
+  NewYear
+}
