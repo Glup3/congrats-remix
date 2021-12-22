@@ -19,7 +19,7 @@ export default function App() {
                 <Meta />
                 <Links />
             </head>
-            <body>
+            <body className="bg-sky-200">
                 <Outlet />
                 <ScrollRestoration />
                 <Scripts />

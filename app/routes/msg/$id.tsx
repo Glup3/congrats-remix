@@ -3,6 +3,7 @@ import { useLoaderData } from 'remix'
 import type { MetaFunction } from 'remix'
 import { db } from '../../db.server'
 import { Message } from '../../generated/client'
+import { CongratsContent } from '../../modules/congratsMessages/CongratsContent'
 
 export const loader: LoaderFunction = async ({ params }) => {
     const message = await db.message.findUnique({
@@ -34,11 +35,5 @@ export const meta: MetaFunction = ({ data }) => {
 export default function CongratsIdPage() {
     const message = useLoaderData<Message>()
 
-    return (
-        <div className="container mx-auto">
-            <h1 className="text-2xl font-semibold">{message.title}</h1>
-            <div>{message.description}</div>
-            <div>{message.date.toString()}</div>
-        </div>
-    )
+    return <CongratsContent message={message} />
 }

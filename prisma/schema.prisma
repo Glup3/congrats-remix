@@ -28,6 +28,7 @@ model Message {
   title       String
   /// saved as HTML
   description String
+  footer      String?
   recipient   String
   type        EventType
   date        DateTime
