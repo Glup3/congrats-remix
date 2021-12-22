@@ -4,6 +4,7 @@ import type { MetaFunction } from 'remix'
 import { db } from '../../db.server'
 import { Message } from '../../generated/client'
 import { CongratsContent } from '../../modules/congratsMessages/CongratsContent'
+import { getImageURLByEventType } from '../../common/messageTypeUtil'
 
 export const loader: LoaderFunction = async ({ params }) => {
     const message = await db.message.findUnique({
@@ -25,10 +26,12 @@ export const meta: MetaFunction = ({ data }) => {
     return {
         title: message.title,
         description: message.description,
-        'og:image': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png',
         'og:title': message.title,
         'og:description': message.description,
         'og:type': 'website',
+        'og:image': getImageURLByEventType(message.type),
+        'og:image:width': '300',
+        'og:image:height': '300',
     }
 }
 
