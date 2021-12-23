@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt'
 import { PrismaClient } from '../app/generated/client'
 const prisma = new PrismaClient()
 
@@ -7,11 +8,11 @@ async function main() {
         data: [
             {
                 username: 'admin',
-                password: 'admin',
+                password: await bcrypt.hash('admin', 10),
             },
             {
                 username: 'test',
-                password: 'test',
+                password: await bcrypt.hash('test', 10),
             },
         ],
     })
