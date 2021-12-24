@@ -99,3 +99,36 @@ export async function logout(request: Request) {
         },
     })
 }
+
+type ChangePasswordInput = {
+    username: string
+    oldPassword: string
+    newPassword: string
+}
+
+export async function changePassword(inputData: ChangePasswordInput) {
+    try {
+        const user = await db.user.findUnique({ where: { username: inputData.username } })
+        if (!user) {
+            return null
+        }
+
+        const isCorrectPassword = await bcrypt.compare(inputData.oldPassword, user.password)
+        console.log('isCorrect', isCorrectPassword)
+        if (!isCorrectPassword) {
+            return null
+        }
+
+        const updatedUser = await db.user.update({
+            where: { username: inputData.username },
+            data: {
+                password: await bcrypt.hash(inputData.newPassword, 10),
+            },
+        })
+
+        return updatedUser
+    } catch (error) {
+        console.log(error)
+        return null
+    }
+}
