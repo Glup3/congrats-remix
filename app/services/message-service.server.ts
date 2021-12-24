@@ -33,3 +33,18 @@ export async function createNewMessage(inputData: MessageInputData) {
         return null
     }
 }
+
+export async function getAllMessages() {
+    try {
+        const allMessages = await db.message.findMany({
+            orderBy: {
+                recipient: 'asc',
+            },
+        })
+
+        return allMessages
+    } catch (error) {
+        console.log(error)
+        return null
+    }
+}
